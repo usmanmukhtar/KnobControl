@@ -54,7 +54,7 @@ import AVFoundation
       switch AVCaptureDevice.authorizationStatus(for: .video) {
       case .denied:
           print("Denied, request permission from settings")
-          presentCameraSettings()
+//          presentCameraSettings()
       case .restricted:
           print("Restricted, device owner must approve")
       case .authorized:
@@ -70,22 +70,22 @@ import AVFoundation
       }
   }
 
-  public func presentCameraSettings() {
-      let alertController = UIAlertController(title: "Error",
-                                    message: "Camera access is denied",
-                                    preferredStyle: .alert)
-      alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
-      alertController.addAction(UIAlertAction(title: "Settings", style: .cancel) { _ in
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-              UIApplication.shared.open(url, options: [:], completionHandler: { _ in
-                  // Handle
-              })
-          }
-      })
-
-    let vc = UIViewController()
-    vc.present(alertController, animated: true)
-  }
+//  public func presentCameraSettings() {
+//      let alertController = UIAlertController(title: "Error",
+//                                    message: "Camera access is denied",
+//                                    preferredStyle: .alert)
+//      alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+//      alertController.addAction(UIAlertAction(title: "Settings", style: .cancel) { _ in
+//        if let url = URL(string: UIApplication.openSettingsURLString) {
+//              UIApplication.shared.open(url, options: [:], completionHandler: { _ in
+//                  // Handle
+//              })
+//          }
+//      })
+//
+//    let vc = UIViewController()
+//    vc.present(alertController, animated: true)
+//  }
 
   /** Contains a Boolean value indicating whether changes
    in the sliders value generate continuous update events. */
