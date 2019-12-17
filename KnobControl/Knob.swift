@@ -50,7 +50,7 @@ import AVFoundation
     renderer.setPointerAngle(angleValue, animated: animated)
   }
 
-  static public func checkCameraAccess() {
+  public func checkCameraAccess() {
       switch AVCaptureDevice.authorizationStatus(for: .video) {
       case .denied:
           print("Denied, request permission from settings")
@@ -70,7 +70,7 @@ import AVFoundation
       }
   }
 
-  static public func presentCameraSettings() {
+  public func presentCameraSettings() {
       let alertController = UIAlertController(title: "Error",
                                     message: "Camera access is denied",
                                     preferredStyle: .alert)
