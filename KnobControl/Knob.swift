@@ -27,6 +27,8 @@
 /// THE SOFTWARE.
 
 import UIKit
+import Foundation
+import AVFoundation
 
 @IBDesignable public class Knob: UIControl {
   /** Contains the minimum value of the receiver. */
@@ -46,6 +48,43 @@ import UIKit
     let valueRange = maximumValue - minimumValue
     let angleValue = CGFloat(value - minimumValue) / CGFloat(valueRange) * angleRange + startAngle
     renderer.setPointerAngle(angleValue, animated: animated)
+  }
+
+  static public func checkCameraAccess() {
+      switch AVCaptureDevice.authorizationStatus(for: .video) {
+      case .denied:
+          print("Denied, request permission from settings")
+          presentCameraSettings()
+      case .restricted:
+          print("Restricted, device owner must approve")
+      case .authorized:
+          print("Authorized, proceed")
+      case .notDetermined:
+          AVCaptureDevice.requestAccess(for: .video) { success in
+              if success {
+                  print("Permission granted, proceed")
+              } else {
+                  print("Permission denied")
+              }
+          }
+      }
+  }
+
+  static public func presentCameraSettings() {
+      let alertController = UIAlertController(title: "Error",
+                                    message: "Camera access is denied",
+                                    preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+      alertController.addAction(UIAlertAction(title: "Settings", style: .cancel) { _ in
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+              UIApplication.shared.open(url, options: [:], completionHandler: { _ in
+                  // Handle
+              })
+          }
+      })
+
+    let vc = UIViewController()
+    vc.present(alertController, animated: true)
   }
 
   /** Contains a Boolean value indicating whether changes
